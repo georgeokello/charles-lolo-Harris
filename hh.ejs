@@ -1,0 +1,44 @@
+<table>
+    <caption>
+      Items in cart
+    </caption>
+  
+    <thead>
+      <tr>
+        <th>Product</th>
+        <th>Price</th>
+        <th>Quantity</th>
+        <th>Total</th>
+        <th>Actions</th>
+      </tr>
+    </thead>
+  
+    <tbody>
+      <% items.forEach( item  => { %>
+  
+        <% const total = item.product.price * item.quantity %>
+  
+        <tr>
+          <td><%= item.product.name %></td>
+          <td>$<%= item.product.price %></td>
+          <td>
+            <form method="POST" action="/cart?_method=PUT">
+              <input type="number" name="quantity" value=<%= item.quantity %> min=<%= item.product.minimumOrder %> max=<%= item.product.countInStock %> />
+
+              <input type="hidden" name="product" value="<%= item.product._id %>" >
+
+              <button id="save" type="submit">Save change</button>
+            </form>
+            </td>
+          <td>$<%= total %> </td>
+          <td>
+            <form method="POST" action="/cart?_method=DELETE">
+              <input type="hidden" name="product" value="<%= item.product._id %>" >
+              <input type="hidden" name="url" value="/cart" >
+              <button id="remove" type="submit">Remove from cart</button>
+            </form>
+          </td>
+        </tr>
+      <% }) %> 
+    </tbody>
+  </table> 

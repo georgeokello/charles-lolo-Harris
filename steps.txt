@@ -1,0 +1,10 @@
+work on interfaces
+
+ - cart ;;
+ - footer;;
+
+mobile version
+
+payment system
+
+host

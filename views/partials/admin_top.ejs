@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="/styles/admin/admin.css" />
+    <link rel="stylesheet" href="/styles/admin/add.css" />
+    <link rel="stylesheet" href="/styles/admin/order.css" />
+    <link rel="stylesheet" href="/styles/admin/orders.css" />
+    <link rel="stylesheet" href="/styles/admin/products.css" />
+    <title><%= title %> Charles "Lolo" Harris</title>
+  </head>
+  <body>
+    <section id="wrapper">
+      <aside id="sidebar">
+        <h1>Charles "Lolo" Harris</h1>
+        <h2>[ <%= user.name %> ]</h2>
+        <ul>
+          <li><a href="/admin">Orders</a></li>
+          <li><a href="/admin/products">Products</a></li>
+          <li><a href="/admin/add">Add Product</a></li>
+          <li>
+            <form method="POST" action="/auth/logout?_method=POST">
+              <button type="submit" id="logout">Logout</button>
+            </form>
+          
+          </li>
+        </ul>
+      </aside>
+
+      <main id="main">

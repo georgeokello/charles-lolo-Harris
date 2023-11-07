@@ -1,0 +1,40 @@
+<%- include('../partials/admin_top') -%>
+<section id="orders">
+  <h1>orders</h1>
+  
+   <% if (orders.length > 0) { %>
+      <table>
+        <caption></caption>
+        <thead>
+          <tr>
+            <th class="p-15">#</th>
+            <th class="left">Customer</th>
+            <th>Products</th>
+            <th>Total Amount</th>
+            <th>Order Date</th>
+            <th>Status</th>
+            <th></th>
+          </tr>
+        </thead>
+        <tbody>
+          <% orders.forEach((order, index) => { %>
+              <tr <% if (!order.isComplete) { %>class="active"<% } %>>
+                <td><%= index + 1 %> </td>
+                <td class="left"><%= order.user.name %> </td>
+                <td><%= order.orderItems.length %></td>
+                <td>$<%= order.totalPrice %> </td>
+                <td><%= order.createdAt.toDateString() %> </td>
+                <td><% if (order.isComplete) { %>Complete<% } else { %>Pending<% } %></td>
+                <td><a class="view" href="/admin/order/<%= order._id %> ">View</a></td>
+              </tr>
+          <% }) %> 
+
+        
+        </tbody>
+      </table>
+   <% } else { %>
+      <span>No orders available.</span>
+   <% } %>
+</section>
+
+<%- include('../partials/admin_bottom') -%>

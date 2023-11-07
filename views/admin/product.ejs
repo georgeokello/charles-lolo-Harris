@@ -1,0 +1,49 @@
+<%- include('../partials/admin_top') -%>
+
+        <section id="add">
+          <h1>Add Product</h1>
+  
+          <form method="POST" action="/products/<%= product._id %>?_method=PUT" enctype='multipart/form-data'>
+            <div class="form-control">
+              <label for="name">Name</label>
+              <input type="text" value="<%= product.name %>" name="name" id="name" />
+            </div>
+            
+            <div class="form-control">
+              <label for="price">Price</label>
+              <input type="number" value="<%= product.price %>" name="price" id="price" />
+            </div>
+            
+            <div class="form-control">
+              <label for="countInStock">In Stock</label>
+              <input type="number" value="<%= product.countInStock %>" name="countInStock" id="countInStock" />
+            </div>
+            
+            <div class="form-control">
+              <label for="minimumOrder">Minimum Order</label>
+              <input type="number" value="<%= product.minimumOrder %>" name="minimumOrder" id="minimumOrder" />
+            </div>
+            
+            <div class="form-control">
+              <label for="image">Image</label>
+              <input type="file" name="image" id="image" />
+            </div>
+
+            <div class="form-control">
+              <label for="description">Description</label>
+              <textarea
+                name="description"
+                id="description"
+                cols="30"
+                rows="10"
+              ><%= product.description %></textarea>
+            </div>
+
+            <div class="form-control">
+              <button type="submit">Save changes</button>
+            </div>
+          </form>
+        </section>
+
+  
+  <%- include('../partials/admin_bottom') -%>

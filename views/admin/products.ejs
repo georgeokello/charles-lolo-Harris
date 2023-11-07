@@ -1,0 +1,46 @@
+<%- include('../partials/admin_top') -%>
+
+    <section id="products">
+      <h1>Products</h1>
+
+      <% if (products.length <= 0) {%>
+      <span id="no-products">No products have been added.</span>
+      <% } else { %> 
+          <table>
+            <caption></caption>
+            <thead>
+              <tr>
+                <th>Image</th>
+                <th>Name</th>
+                <th>Price</th>
+                <th>In Stock</th>
+                <th>Min Order</th>
+                <th>Actions</th>
+              </tr>
+            </thead>
+            <tbody>
+              <% products.forEach(product => { %>
+                  <tr>
+                    <td>
+                      <img src="/images/<%= product.image %>" alt="<%= product.name %>" />
+                    </td>
+                    <td class="product-name"><%= product.name %></td>
+                    <td>$<%= product.price %></td>
+                    <td><%= product.countInStock %></td>
+                    <td><%= product.minimumOrder %></td>
+                    <td>
+                      <a href="/admin/product/<%= product._id %>">Edit</a>
+    
+                      <form  method="POST" action="/products/<%= product._id %>?_method=DELETE">
+                        <button type="submit" class="delete">Delete</button>
+                      </form>
+                    </td>
+                   
+                  </tr>
+              <% }) %> 
+            </tbody>
+          </table>
+        <% } %>  
+     </section>
+  
+  <%- include('../partials/admin_bottom') -%>

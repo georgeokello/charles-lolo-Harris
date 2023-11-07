@@ -1,0 +1,74 @@
+* {
+  margin: 0px;
+  padding: 0px;
+  box-sizing: border-box;
+}
+
+#wrapper {
+  width: 100%;
+  height: auto;
+  background-color: #f5f5f5;
+}
+#wrapper #sidebar {
+  width: 20%;
+  height: 100vh;
+  background-color: #262A56;
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 1;
+}
+#wrapper #sidebar h1 {
+  color: #E3CCAE;
+  text-align: center;
+  padding-top: 20px;
+}
+#wrapper #sidebar h2 {
+  color: #E3CCAE;
+  font-size: 13px;
+  font-weight: normal;
+  text-align: center;
+  text-transform: capitalize;
+  padding: 5px 0;
+  padding-bottom: 15px;
+}
+#wrapper #sidebar ul {
+  list-style: none;
+  padding: 0;
+}
+#wrapper #sidebar ul li a,
+#wrapper #sidebar ul li button {
+  color: #E3CCAE;
+  text-decoration: none;
+  display: block;
+  padding: 15px 20px;
+  background-color: #262A56;
+  transition: all 0.3s ease;
+}
+#wrapper #sidebar ul li a:hover,
+#wrapper #sidebar ul li button:hover {
+  background-color: #060b3f;
+}
+#wrapper #sidebar ul li button#logout {
+  width: 100%;
+  border: none;
+  display: block;
+  font-family: sans-serif;
+  text-align: center;
+  text-transform: uppercase;
+  background-color: #262A56;
+  cursor: pointer;
+}
+#wrapper #sidebar ul li button#logout:hover {
+  background-color: #b71c1c;
+}
+#wrapper #main {
+  width: 80%;
+  height: auto;
+  background-color: #fff;
+  position: absolute;
+  top: 0;
+  right: 0;
+  z-index: 0;
+  padding: 20px;
+}

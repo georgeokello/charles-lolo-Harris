@@ -1,0 +1,124 @@
+#cart {
+  width: 100%;
+  height: auto;
+  text-align: center;
+  padding: 0 20px;
+}
+#cart #checkout h1 {
+  font-size: 2rem;
+  color: #000;
+  opacity: 0.8;
+}
+#cart table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 20px;
+  border-radius: 5px;
+  overflow: hidden;
+}
+#cart table caption {
+  display: none;
+}
+#cart table thead {
+  color: #fff;
+  background-color: #000;
+}
+#cart table thead th {
+  padding: 10px 0px;
+}
+#cart table tbody {
+  background-color: #f5f5f5;
+}
+#cart table tbody tr td {
+  padding: 10px 0px;
+}
+#cart table tbody tr td input[type=number] {
+  width: 50px;
+  height: 30px;
+  border: 1px solid #000;
+  border-radius: 5px;
+  text-align: center;
+  font-size: 1rem;
+  color: #000;
+  outline: none;
+}
+#cart table tbody tr td button {
+  visibility: hidden;
+  font-size: 14px;
+  border: none;
+  background-color: transparent;
+  cursor: pointer;
+}
+#cart table tbody tr td button#save {
+  color: blue;
+  margin-left: 8px;
+}
+#cart table tbody tr td button#remove {
+  color: red;
+}
+#cart table tbody tr td button:hover {
+  text-decoration: underline;
+}
+#cart table tbody tr:hover {
+  background-color: #e5e5e5;
+}
+#cart table tbody tr:hover button {
+  visibility: visible;
+}
+#cart #update {
+  border: 1px solid #000;
+  border-radius: 5px;
+  background-color: transparent;
+  padding: 1rem;
+  margin-top: 20px;
+  cursor: pointer;
+  transition: all 0.3s ease-in-out;
+}
+#cart #update:hover {
+  background-color: #000;
+  color: #fff;
+}
+
+#place-order {
+  width: 100%;
+  margin-top: 20px;
+}
+#place-order form #form-data {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  row-gap: 10px;
+  justify-items: center;
+}
+#place-order form #form-data input {
+  width: 250px;
+  padding: 0.5rem;
+  border: 1px solid #aaa;
+  border-radius: 5px;
+}
+#place-order form #form-action {
+  margin-top: 25px;
+  text-align: center;
+}
+#place-order form #form-action button {
+  width: 250px;
+  padding: 0.8rem 0.5rem;
+  border: none;
+  border-radius: 5px;
+  color: #E3CCAE;
+  background-color: #000;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+#place-order form #form-action button:hover {
+  background-color: #262A56;
+  color: #E3CCAE;
+}
+#place-order form #form-action a {
+  color: #262A56;
+  display: block;
+  margin-top: 10px;
+  cursor: pointer;
+}
+#place-order form #form-action a:hover {
+  text-decoration: underline;
+}
