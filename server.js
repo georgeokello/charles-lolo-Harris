@@ -19,10 +19,11 @@ import { payments } from './controllers/paymentController.js';
 import Stripe from 'stripe';
 
 import passportConfig from './config/passport.js';
+//import { json } from 'body-parser';
 
 const app = express();
 const stripe = new Stripe(process.env.SECRET_KEY)
-const MY_DOMAIN = process.env.MY_DOMAIN;
+const MY_DOMAIN = process.env.MY_DOMAIN
 
 /* Configs */
 config();
@@ -71,22 +72,41 @@ app.use('/cart', cartRoutes);
 app.use('/orders', orderRoutes);
 //app.use('/payments', payments)
 
-app.post('/payments', async (req, res) => {
-  const session = await stripe.checkout.sessions.create({
-    line_items: [
-      {
-        // Provide the exact Price ID (for example, pr_1234) of the product you want to sell
-        price: '{{PRICE_ID}}',
-        quantity: 1,
-      },
-    ],
-    mode: 'payment',
-    success_url: `${YOUR_DOMAIN}/success.html`,
-    cancel_url: `${YOUR_DOMAIN}/cancel.html`,
-  });
 
-  res.redirect(303, session.url);
+
+app.post('/payments', async (req, res) => {
+  const i = req.body.items
+  console.log(i)
+  try {
+    const session = await stripe.checkout.sessions.create({
+      payment_method_types: ['card'],
+      mode: 'payment',
+      line_items: req.body.items.map(item =>{
+        const cartItem = items.get(item.id)
+        return {
+          price_data:{
+            currency: 'usd',
+            product_data: {
+              name: cartItem.name
+            },
+            unit_amount: cartItem.priceInCents
+          },
+          quantity: item.quantity
+        }
+      }),
+      success_url:`${process.env.MY_DOMAIN}/success`,
+      cancel_url:`${process.env.MY_DOMAIN}/cancel`,
+    })
+    return res.send({url: session.url})
+  }catch(err){
+
+  }
 });
+
+
+
+
+
 
 const PORT = process.env.PORT || 8080;
 
