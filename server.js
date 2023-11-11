@@ -22,7 +22,7 @@ import passportConfig from './config/passport.js';
 
 const app = express();
 const stripe = new Stripe(process.env.SECRET_KEY)
-const YOUR_DOMAIN = 'http://127.0.0.1:3000/';
+const MY_DOMAIN = process.env.MY_DOMAIN;
 
 /* Configs */
 config();
