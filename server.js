@@ -75,7 +75,7 @@ app.use('/orders', orderRoutes);
 
 
 app.post('/payments', async (req, res) => {
-  const i = req.body.items
+  const items = req.body.items
   console.log(i)
   try {
     const session = await stripe.checkout.sessions.create({
