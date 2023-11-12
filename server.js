@@ -76,30 +76,18 @@ app.use('/orders', orderRoutes);
 
 app.post('/payments', async (req, res) => {
   const items = req.body.items
-  console.log(i)
+  console.log(items)
   try {
     const session = await stripe.checkout.sessions.create({
       payment_method_types: ['card'],
       mode: 'payment',
-      line_items: req.body.items.map(item =>{
-        const cartItem = items.get(item.id)
-        return {
-          price_data:{
-            currency: 'usd',
-            product_data: {
-              name: cartItem.name
-            },
-            unit_amount: cartItem.priceInCents
-          },
-          quantity: item.quantity
-        }
-      }),
-      success_url:`${process.env.MY_DOMAIN}/success`,
-      cancel_url:`${process.env.MY_DOMAIN}/cancel`,
+      line_items: ['xxx', 'ggg'],
+      success_url:`${MY_DOMAIN}/success`,
+      cancel_url:`${MY_DOMAIN}/cancel`,
     })
     return res.send({url: session.url})
   }catch(err){
-
+    console.log(err)
   }
 });
 
