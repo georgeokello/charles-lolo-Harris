@@ -22,8 +22,8 @@ import passportConfig from './config/passport.js';
 //import { json } from 'body-parser';
 
 const app = express();
-const stripe = new Stripe(process.env.SECRET_KEY)
-const MY_DOMAIN = process.env.MY_DOMAIN
+const stripe = new Stripe('sk_test_51IvOHNDtBEIIqonMjzO5wuBdhEtaXNYeis4sO8b5kXe2y5ghutKS5395FeGGDCx5VbnxRO3EpBNwPPYjt6qQEy9S00LoZXeZq3')
+const MY_DOMAIN = 'http://127.0.0.1:3000'
 
 /* Configs */
 config();
@@ -77,23 +77,41 @@ app.use('/orders', orderRoutes);
 app.post('/payments', async (req, res) => {
   const items = req.body.items
   console.log(items)
+  const priceID = req.body.totalPrice
+  console.log(priceID)
+  // map elements
+  // const productNames = items.map(item =>{
+  //   return item.product.name
+  // })
+  // price customer
+  const product = await stripe.products.create({
+    name: 'Gold Special',
+  });
+  console.log(product)
+
+  // stripe price
+  const price = await stripe.prices.create({
+    product: product.id,
+    unit_amount: priceID * 100,
+    currency: 'usd',
+  });
+  console.log(price)
+  
   try {
     const session = await stripe.checkout.sessions.create({
-      payment_method_types: ['card'],
       mode: 'payment',
-      line_items: ['xxx', 'ggg'],
+      line_items: [
+        {price: price.id, quantity: 1},
+      ],
       success_url:`${MY_DOMAIN}/success`,
       cancel_url:`${MY_DOMAIN}/cancel`,
     })
-    return res.send({url: session.url})
+    const url = session.url
+    return res.redirect(url)
   }catch(err){
     console.log(err)
   }
 });
-
-
-
-
 
 
 const PORT = process.env.PORT || 8080;
