@@ -7,6 +7,9 @@ import session from 'express-session';
 import MongoStore from 'connect-mongo';
 import methodOverride from 'method-override';
 
+import Product from './models/productModel.js';
+import Cart from './models/cartModel.js';
+
 import connectDB from './config/db.js';
 
 import authRoutes from './routes/authRouter.js';
@@ -75,37 +78,43 @@ app.use('/orders', orderRoutes);
 
 
 app.post('/payments', async (req, res) => {
-  const items = req.body.items
-  console.log(items)
-  const priceID = req.body.totalPrice
-  console.log(priceID)
-  // map elements
-  // const productNames = items.map(item =>{
-  //   return item.product.name
-  // })
-  // price customer
-  const product = await stripe.products.create({
-    name: 'Gold Special',
-  });
-  console.log(product)
+  const cart = await Cart.findOne({ user: req.user._id })
+  const items = cart.products
 
-  // stripe price
-  const price = await stripe.prices.create({
-    product: product.id,
-    unit_amount: priceID * 100,
-    currency: 'usd',
-  });
-  console.log(price)
-  
+  const q = []
+  const p =[]
+
+  // Iterate through each order and access the product name
+ for (const order of items) {
+    p.push(await Product.findById(order.product))
+    q.push(order.quantity)
+  }
+
+ // Use map to add quantity to each product
+ const productsWithQuantity = p.map((product, index) => ({
+  ...product,
+  quantity: q[index]
+ }))
+
   try {
     const session = await stripe.checkout.sessions.create({
       mode: 'payment',
-      line_items: [
-        {price: price.id, quantity: 1},
-      ],
+      line_items: productsWithQuantity.map(item => ({
+        price_data: {
+          currency: "usd",
+          product_data: {
+            name: item._doc.name,
+            images: [`${process.env.MY_DOMAIN}/${item._doc.image}`],
+          },
+          unit_amount:  item._doc.price.toFixed(2) * 100,
+        },
+        quantity: item.quantity
+      })),
       success_url:`${MY_DOMAIN}/success`,
       cancel_url:`${MY_DOMAIN}/cancel`,
-    })
+
+     })
+    
     const url = session.url
     return res.redirect(url)
   }catch(err){
