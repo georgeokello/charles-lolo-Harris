@@ -1,7 +1,58 @@
 <%- include('../partials/layout_top') -%>
 
-      <section id="index">
-            Contact
+      <section id="index" class="text-center">
+           <h1>Contact</h1> 
+      </section>
+      <hr/>
+
+      <section>
+            <div class="row">
+                  <div class="col my-3 mx-3">
+                        <div class="card">
+                            <div class="card-header">Contact Form</div>
+                            <div class="card-body">
+            
+                                <form method="post" action="/send">
+                                    <div class="mb-3">
+                                        <label for="name">Name</label>
+                                        <input type="text" name="name" class="form-control" />
+                                        <% if(errors && errors.name) { %>
+                                        <span class="text-danger"><%= errors.name.msg %></span>
+                                        <% } %>
+                                    </div>
+                                    <div class="mb-3">
+                                        <label for="email">Email</label>
+                                        <input type="text" name="email" class="form-control" />
+                                        <% if (errors && errors.email) { %>
+                                        <span class="text-danger"><%= errors.email.msg %></span>
+                                        <% } %>
+                                    </div>
+                                    <div class="mb-3">
+                                        <label for="subject">Subject</label>
+                                        <input type="text" name="subject" class="form-control" />
+                                        <% if (errors && errors.subject) { %>
+                                        <span class="text-danger"><%= errors.subject.msg %></span>
+                                        <% } %>
+                                    </div>
+                                    <div class="mb-3">
+                                        <label for="message">Message</label>
+                                        <textarea name="message" class="form-control"></textarea>
+                                        <% if(errors && errors.message) { %>
+                                        <span class="text-danger"><%= errors.message.msg %></span>
+                                        <% } %>
+                                    </div>
+                                    <button type="submit" class="btn btn-success">Send Message</button>
+                                </form>
+            
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col my-op mx-3">
+                        <div style="object-fit: contain;" class="p-5 rounded align-items-center">
+                              <img class="rounded mx-auto d-block" src="/images/contactImg.PNG"> 
+                        </div>
+                    </div>
+            </div>
       </section>
       
 <%- include('../partials/layout_bottom') -%>

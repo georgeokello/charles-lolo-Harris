@@ -21,6 +21,10 @@ import orderRoutes from './routes/orderRoutes.js';
 import { payments } from './controllers/paymentController.js';
 import Stripe from 'stripe';
 
+import { check, validationResult }  from 'express-validator';
+
+import nodemailer from 'nodemailer';
+
 import passportConfig from './config/passport.js';
 //import { json } from 'body-parser';
 
@@ -120,6 +124,58 @@ app.post('/payments', async (req, res) => {
   }catch(err){
     console.log(err)
   }
+});
+
+
+
+app.post('/sendEmail', 
+	[
+		check('name').notEmpty().withMessage('Name is required'),
+		check('email').isEmail().withMessage('Invalid Email Address'),
+		check('subject').notEmpty().withMessage('Subject is required'),
+		check('message').notEmpty().withMessage('Message is required')
+	], (request, response) => {
+
+		const errors = validationResult(request);
+
+		if(!errors.isEmpty())
+		{
+			response.render('contact', { errors : errors.mapped() });
+		}
+		else
+		{
+			const transporter = nodemailer.createTransport({
+				service : 'Gmail',
+				auth : {
+					user : 'povonteblog@gmail.com',
+					pass : 'write your Google App Password'
+				}
+			});
+
+			const mail_option = {
+				from : request.body.email,
+				to : 'jm6078390@gmail.com',
+				subject : request.body.subject,
+				text : request.body.message
+			};
+
+			transporter.sendMail(mail_option, (error, info) => {
+				if(error)
+				{
+					console.log(error);
+				}
+				else
+				{
+					response.redirect('/successEmail');
+				}
+			});
+		}
+});
+
+app.get('/successEmail', (request, response) => {
+
+	response.send('<h1>Your Message was Successfully Send!</h1>');
+
 });
 
 

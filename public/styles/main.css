@@ -10,9 +10,9 @@ html {
 }
 
 .active {
+  color: #c2bdbd;
   background-color: #262A56;
   padding: 5px;
-  color: #fcf4f4;
   border-radius: 5px;
 }
 

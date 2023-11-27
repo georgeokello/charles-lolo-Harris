@@ -53,6 +53,7 @@ router.get('/contact', cart, (req, res) => {
     user: req.isAuthenticated() ? req.user : '',
     loggedIn: req.isAuthenticated(),
     items: req.cart ,
+    errors: '',
   });
 });
 
