@@ -24,13 +24,17 @@ import Stripe from 'stripe';
 import { check, validationResult }  from 'express-validator';
 
 import nodemailer from 'nodemailer';
+import { google } from 'googleapis';
+import fs from 'fs';
+import credentials from './credentials.json' assert { type: 'json' };
+import readline from 'readline'
 
 import passportConfig from './config/passport.js';
 //import { json } from 'body-parser';
 
 const app = express();
-const stripe = new Stripe('sk_test_51IvOHNDtBEIIqonMjzO5wuBdhEtaXNYeis4sO8b5kXe2y5ghutKS5395FeGGDCx5VbnxRO3EpBNwPPYjt6qQEy9S00LoZXeZq3')
-const MY_DOMAIN = 'http://127.0.0.1:3000'
+const stripe = new Stripe('pk_live_51JMeuKARS2LN0D5T8V2p1LMyPBqGIl0R6M7zijJSSAC5TH8WuD0EWjeSVqA1ZU09OQtRHDGP49jqtiRzoSCqKE0700NEU5k3hK')
+const MY_DOMAIN = 'https://charlesharrisboxing.com/'
 
 /* Configs */
 config();
@@ -144,17 +148,10 @@ app.post('/sendEmail',
 		}
 		else
 		{
-			const transporter = nodemailer.createTransport({
-				service : 'Gmail',
-				auth : {
-					user : 'povonteblog@gmail.com',
-					pass : 'write your Google App Password'
-				}
-			});
 
 			const mail_option = {
 				from : request.body.email,
-				to : 'jm6078390@gmail.com',
+				to : 'georgeokello335@gmail.com',
 				subject : request.body.subject,
 				text : request.body.message
 			};

@@ -63,3 +63,5 @@ router.get('/contact', cart, (req, res) => {
 router.get('/cart', ensureAuthenticated, cart, cartPage);
 
 export default router;
+
+
