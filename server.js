@@ -32,9 +32,12 @@ import readline from 'readline'
 import passportConfig from './config/passport.js';
 //import { json } from 'body-parser';
 
+const sk = process.env.SECRET_KEY
+
 const app = express();
-const stripe = new Stripe('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')
+const stripe = new Stripe(sk)
 const MY_DOMAIN = 'https://charlesharrisboxing.com/'
+
 
 /* Configs */
 config();
@@ -122,7 +125,7 @@ app.post('/payments', async (req, res) => {
       cancel_url:`${MY_DOMAIN}/cancel`,
 
      })
-    
+    console.log(session)
     const url = session.url
     console.log(url)
     return res.redirect(url)
