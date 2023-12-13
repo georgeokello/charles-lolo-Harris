@@ -124,6 +124,7 @@ app.post('/payments', async (req, res) => {
      })
     
     const url = session.url
+    console.log(url)
     return res.redirect(url)
   }catch(err){
     console.log(err)
