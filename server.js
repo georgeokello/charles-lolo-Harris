@@ -32,10 +32,8 @@ import readline from 'readline'
 import passportConfig from './config/passport.js';
 //import { json } from 'body-parser';
 
-const sk = process.env.SECRET_KEY
 
 const app = express();
-const stripe = new Stripe(sk)
 const MY_DOMAIN = 'https://charlesharrisboxing.com/'
 
 
@@ -43,6 +41,10 @@ const MY_DOMAIN = 'https://charlesharrisboxing.com/'
 config();
 connectDB();
 passportConfig(passport);
+
+/* stripe api key */
+const sk = process.env.SECRET_KEY
+const stripe = new Stripe(sk)
 
 /* View Engine */
 app.set('view engine', 'ejs');
