@@ -33,7 +33,7 @@ import passportConfig from './config/passport.js';
 //import { json } from 'body-parser';
 
 const app = express();
-const stripe = new Stripe('pk_live_51JMeuKARS2LN0D5T8V2p1LMyPBqGIl0R6M7zijJSSAC5TH8WuD0EWjeSVqA1ZU09OQtRHDGP49jqtiRzoSCqKE0700NEU5k3hK')
+const stripe = new Stripe('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')
 const MY_DOMAIN = 'https://charlesharrisboxing.com/'
 
 /* Configs */
