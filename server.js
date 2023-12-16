@@ -18,16 +18,13 @@ import indexRoutes from './routes/indexRoutes.js';
 import productRoutes from './routes/productRoutes.js';
 import cartRoutes from './routes/cartRoutes.js';
 import orderRoutes from './routes/orderRoutes.js';
-import { payments } from './controllers/paymentController.js';
 import Stripe from 'stripe';
 
 import { check, validationResult }  from 'express-validator';
+// Use sendmail to send the email
+import sendmail from 'sendmail';
 
 import nodemailer from 'nodemailer';
-import { google } from 'googleapis';
-import fs from 'fs';
-import credentials from './credentials.json' assert { type: 'json' };
-import readline from 'readline'
 
 import passportConfig from './config/passport.js';
 //import { json } from 'body-parser';
@@ -137,43 +134,51 @@ app.post('/payments', async (req, res) => {
 });
 
 
+app.post('/sendEmail', [
+  check('name').notEmpty().withMessage('Name is required'),
+  check('email').isEmail().withMessage('Invalid Email Address'),
+  check('subject').notEmpty().withMessage('Subject is required'),
+  check('message').notEmpty().withMessage('Message is required'),
+], (req, res) => {
+  const errors = validationResult(req);
 
-app.post('/sendEmail', 
-	[
-		check('name').notEmpty().withMessage('Name is required'),
-		check('email').isEmail().withMessage('Invalid Email Address'),
-		check('subject').notEmpty().withMessage('Subject is required'),
-		check('message').notEmpty().withMessage('Message is required')
-	], (request, response) => {
+  if (!errors.isEmpty()) {
+    return res.status(400).json({ errors: errors.array() });
+  }
 
-		const errors = validationResult(request);
+  const transporter = nodemailer.createTransport({
+    service: 'gmail',
+    auth: {
+      user: 'charleslolo807@gmail.com',
+      pass: 'zyos yaxg xxjo dgis',
+    },
+  });
 
-		if(!errors.isEmpty())
-		{
-			response.render('contact', { errors : errors.mapped() });
-		}
-		else
-		{
+  console.log(".......")
+  console.log(transporter)
+  console.log("......")
 
-			const mail_option = {
-				from : request.body.email,
-				to : 'georgeokello335@gmail.com',
-				subject : request.body.subject,
-				text : request.body.message
-			};
+  const mailOptions = {
+    from : req.body.email,
+    to : 'genuinepeopleco@gmail.com',
+    subject : req.body.subject,
+    text : req.body.message
+  };
 
-			transporter.sendMail(mail_option, (error, info) => {
-				if(error)
-				{
-					console.log(error);
-				}
-				else
-				{
-					response.redirect('/successEmail');
-				}
-			});
-		}
+  console.log(mailOptions)
+
+  transporter.sendMail(mailOptions, (error, info) => {
+    if (error) {
+      console.error(error);
+    } else {
+      console.log('Email sent: ' + info.response);
+      res.redirect('/successEmail');
+    }
+  });
+
 });
+
+
 
 app.get('/successEmail', (request, response) => {
 
