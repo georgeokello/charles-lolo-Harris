@@ -86,7 +86,6 @@ app.use('/orders', orderRoutes);
 //app.use('/payments', payments)
 
 
-
 app.post('/payments', async (req, res) => {
   const cart = await Cart.findOne({ user: req.user._id })
   const items = cart.products
