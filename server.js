@@ -34,7 +34,7 @@ import passportConfig from './config/passport.js';
 
 
 const app = express();
-const MY_DOMAIN = 'https://charlesharrisboxing.com'
+const MY_DOMAIN = 'https://charlesharrisboxing.com/'
 
 
 /* Configs */
@@ -127,20 +127,10 @@ app.post('/payments', async (req, res) => {
 
      })
     console.log(session)
-
-    // Add the Stripe header to the request
-    const headers = {
-      'x-stripe-routing-context-priority-tier': 'livemode-critical',
-    };
-
+    
     const url = session.url
     console.log(url)
-    /* return res.redirect(url) */
-    // Redirect with the Stripe header in the request
-    return res.redirect({
-      url,
-      headers,
-    });
+    return res.redirect(url)
   }catch(err){
     console.log(err)
   }
